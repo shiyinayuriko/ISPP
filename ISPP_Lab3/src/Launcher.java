@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.List;
 
 import attributeRemove.RoughSetsAttributeRemove;
@@ -5,7 +6,7 @@ import attributeValueRemove.AttributeValueRemove;
 
 public class Launcher {
 	public static void main(String[] args){
-		TableModel tableModel = TableReader.getTable();
+		TableModel tableModel = TableReader.getTable("./train.txt");
 		
 		
 		RoughSetsAttributeRemove rs = new RoughSetsAttributeRemove();
@@ -26,6 +27,21 @@ public class Launcher {
 
 		List<int[]> rtable = rvs.startRemoveValue();
 		printTable(rtable);	
+		
+		TableModel testModel = TableReader.getNewTabel(TableReader.getTable("./train.txt"), ret);
+
+		int counter = 0;
+		for(int[] testLine:testModel.table){
+			int[] a = makeDecision(testLine,testModel.C,testModel.D,rtable);
+			if(a==null || testLine[4]!=a[4]){
+				System.out.println("error");
+//				printLine(testLine);
+//				printLine(a);
+				counter ++;
+			}
+			System.out.println(counter);
+		}
+		
 	}
 	
 	static void printTable(List<int[]> table){
@@ -41,6 +57,30 @@ public class Launcher {
 	}
 	
 	static int[] makeDecision(int[] condition,int[] conditionFilter, int[] decisionFilter, List<int[]> rtable){
+		for(int[] line:rtable){
+			if(!isConditionEquals(condition, line, conditionFilter)) continue;
+
+			int[] result = Arrays.copyOf(condition, condition.length);
+			for(int i=0;i<condition.length;i++){
+				if(decisionFilter[i]!=0) result[i] = line[i];
+			}
+			return result;
+		}
 		return null;
 	}
+	
+	private static boolean isConditionEquals(int[] condition,int[] condition2,int[] conditionFilter){
+		for(int i=0;i<condition.length;i++){
+			if(conditionFilter[i]!=0 && condition2[i]!=0 && condition[i]!=condition2[i]) return false;
+		}
+		return true;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 }

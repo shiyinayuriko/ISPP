@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 
 public class TableReader {
-	public static TableModel getTable(){
+	public static TableModel getTable(String file){
 		TableModel tableModel = new TableModel();
 		
 		List<int[]> table = new ArrayList<int[]>();
@@ -20,7 +20,7 @@ public class TableReader {
 		tableModel.D  =  new int[]{0,0,0,0,0,1};
 		
 		try {
-			Scanner sc = new Scanner(new File("./train.txt"));
+			Scanner sc = new Scanner(new File(file));
 			while(sc.hasNext()){
 				String[] s = sc.nextLine().split("\t");
 				int[] tmp = new int[6];

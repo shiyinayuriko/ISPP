@@ -13,17 +13,7 @@ public class AttributeValueRemove {
 	public int[] D;
 	
 	public List<int[]> startRemoveValue(){
-		lc:while(true){
-			for(int[] line:table){
-				if(isConflict(line, new HashSet())){
-					if(Math.random()>0.5) table.remove(line);
-					continue lc;
-				}
-			}
-			break;
-		}
-		
-		
+
 		List<int[]> newTable = new ArrayList<int[]>();
 		for(int[] line:table){
 			List<Set<Integer>> stack =new ArrayList<Set<Integer>>();

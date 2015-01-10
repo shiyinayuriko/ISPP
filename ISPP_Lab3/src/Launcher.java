@@ -18,7 +18,9 @@ public class Launcher {
 		
 		System.out.print("revieve:");printLine(ret);
 		
-		TableModel newTableModel = TableReader.getNewTabel(tableModel, ret);
+		TableModel newTableModel =TableReader.getNewTabel(tableModel, ret);
+		
+		newTableModel = TableReader.removeConflict(newTableModel) ;
 		
 		AttributeValueRemove rvs = new AttributeValueRemove();
 		rvs.setTable(newTableModel.table);
@@ -28,7 +30,7 @@ public class Launcher {
 		List<int[]> rtable = rvs.startRemoveValue();
 		printTable(rtable);	
 		
-		TableModel testModel = TableReader.getNewTabel(TableReader.getTable("./train.txt"), ret);
+		TableModel testModel = TableReader.getNewTabel(TableReader.getTable("./test.txt"), ret);
 
 		int counter = 0;
 		for(int[] testLine:testModel.table){
@@ -39,9 +41,8 @@ public class Launcher {
 //				printLine(a);
 				counter ++;
 			}
-			System.out.println(counter);
 		}
-		
+		System.out.println(counter);
 	}
 	
 	static void printTable(List<int[]> table){
@@ -52,7 +53,7 @@ public class Launcher {
 	static void printLine(int[] line){
 		String str = "";
 		for(int i=0;i<line.length;i++)
-			str+=line[i];
+			str+=line[i]+"\t";
 		System.out.println(str);
 	}
 	
